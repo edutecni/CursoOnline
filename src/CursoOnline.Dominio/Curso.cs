@@ -3,7 +3,7 @@
     public class Curso
     {
         
-        public string Nome { get; set; }
+        public string Nome { get; private set; }
         public double CargaHoraria { get; private set; }
         public string PublicoAlvo { get; private set; }
         public double ValorCurso { get; private set; }

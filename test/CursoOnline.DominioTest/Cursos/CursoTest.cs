@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using CursoOnline.Dominio.Cursos;
+using ExpectedObjects;
 
 namespace CursoOnline.DominioTest.Cursos
 {
@@ -21,19 +22,42 @@ namespace CursoOnline.DominioTest.Cursos
         public void DeveCriarCurso()
         {
             // Arrange (Organização)
-            const string nome = "Informática Básica";
-            const double cargaHoraria = 80;
-            const string publicoAlvo = "Estudantes";
-            const double valorCurso = 950;
+            // Lembrando que os nomes dos campos do objeto anônimo abaixo devem estar iguais aos do opjeto que será comparado.
+            var cursoEsperado = new
+            {
+                Nome = "Informática Básica",
+                CargaHoraria = (double)80,
+                PublicoAlvo = PublicoAlvo.Estudante,
+                ValorCurso = (double)950
+            };
 
             // Act (Ação)
-            var curso = new Curso(nome, cargaHoraria, publicoAlvo, valorCurso);
+            var curso = new Curso(cursoEsperado.Nome, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, cursoEsperado.ValorCurso);
 
             // Assert
-            Assert.Equal(nome, curso.Nome);
-            Assert.Equal(cargaHoraria, curso.CargaHoraria);
-            Assert.Equal(publicoAlvo, curso.PublicoAlvo);
-            Assert.Equal(valorCurso, curso.ValorCurso);
+            cursoEsperado.ToExpectedObject().ShouldMatch(curso);
         }
+
+        // Quando se utiliza o Decorator Theory, cada um dos InlineDatas serão executados uma vez.
+        // Nesse caso um será executado passando uma string vazia, e o outro passando string nula.
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void NaoDeveCursoTerUmNInvalido(string nomeInvalid)
+        {
+            var cursoEsperado = new
+            {
+                Nome = nomeInvalid,
+                CargaHoraria = (double)80,
+                PublicoAlvo = PublicoAlvo.Estudante,
+                ValorCurso = (double)950
+            };
+
+            // O Lambda abaixo do "Assert.Throws<ArgumentException>(()..." significa que ele expera uma Função
+            Assert.Throws<ArgumentException>(() =>
+            new Curso(cursoEsperado.Nome, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, cursoEsperado.ValorCurso));
+        }
+
     }
+    
 }

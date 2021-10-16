@@ -4,6 +4,7 @@ using System.Text;
 using Xunit;
 using CursoOnline.Dominio.Cursos;
 using ExpectedObjects;
+using CursoOnline.DominioTest._Util;
 
 namespace CursoOnline.DominioTest.Cursos
 {
@@ -54,10 +55,10 @@ namespace CursoOnline.DominioTest.Cursos
             };
 
             // O Lambda abaixo do "Assert.Throws<ArgumentException>(()..." significa que ele expera uma Função
-            var message = Assert.Throws<ArgumentException>(() =>
-            new Curso(cursoEsperado.Nome, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, cursoEsperado.ValorCurso)).Message;
+            Assert.Throws<ArgumentException>(() =>
+            new Curso(cursoEsperado.Nome, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, cursoEsperado.ValorCurso)).ComMensagem("Nome inválido!");
 
-            Assert.Equal("Nome inválido!", message);
+            
         }
 
         [Theory]

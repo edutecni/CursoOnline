@@ -19,7 +19,13 @@ namespace CursoOnline.Dominio.Cursos
         public Curso(string nome, double cargaHoraria, PublicoAlvo publicoAlvo, double valorCurso)
         {
             if (string.IsNullOrWhiteSpace(nome))
-                throw new ArgumentException();
+                throw new ArgumentException("Nome inválido!");
+
+            if (cargaHoraria < 1)
+                throw new ArgumentException("Carga horária menor que 1!");
+
+            if (valorCurso < 1)
+                throw new ArgumentException("Valor do curso menor que 1!");
 
             this.Nome = nome;
             this.CargaHoraria = cargaHoraria;

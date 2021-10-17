@@ -39,6 +39,7 @@ namespace CursoOnline.DominioTest.Cursos
 
         // Cleanup
         // Cleanup é executado depois de cada teste e serve para limpar os testes
+        // Tem de ser feito dentro do Dispose
         public void Dispose()
         {
             _ouput.WriteLine("Dispose sendo executado");

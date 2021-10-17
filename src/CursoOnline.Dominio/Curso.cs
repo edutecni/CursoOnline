@@ -13,10 +13,11 @@ namespace CursoOnline.Dominio.Cursos
         public double CargaHoraria { get; private set; }
         public PublicoAlvo PublicoAlvo { get; private set; }
         public double ValorCurso { get; private set; }
+        public string Descricao { get; set; }
 
         //public Curso() { }
 
-        public Curso(string nome, double cargaHoraria, PublicoAlvo publicoAlvo, double valorCurso)
+        public Curso(string nome, string descricao, double cargaHoraria, PublicoAlvo publicoAlvo, double valorCurso)
         {
             if (string.IsNullOrWhiteSpace(nome))
                 throw new ArgumentException("Nome inválido!");
@@ -31,6 +32,7 @@ namespace CursoOnline.Dominio.Cursos
             this.CargaHoraria = cargaHoraria;
             this.PublicoAlvo = publicoAlvo;
             this.ValorCurso = valorCurso;
+            this.Descricao = descricao;
         }
     }
     public enum PublicoAlvo

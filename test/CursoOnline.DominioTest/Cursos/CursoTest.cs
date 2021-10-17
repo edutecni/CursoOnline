@@ -1,4 +1,5 @@
-﻿using CursoOnline.Dominio.Cursos;
+﻿using Bogus;
+using CursoOnline.Dominio.Cursos;
 using CursoOnline.DominioTest._Builders;
 using CursoOnline.DominioTest._Util;
 using ExpectedObjects;
@@ -32,12 +33,19 @@ namespace CursoOnline.DominioTest.Cursos
         {
             _ouput = output;
             _ouput.WriteLine("Construtor sendo executado");
+            var faker = new Faker();
 
-            _nome = "Informática Basica";
-            _cargaHoraria = 80;
+            _nome = faker.Random.Words();
+            _cargaHoraria = faker.Random.Double(50, 100);
             _publicoAlvo = PublicoAlvo.Estudante;
-            _valor = 950;
-            _descricao = "Uma descricao";
+            _valor = faker.Random.Double(100, 1000);
+            _descricao = faker.Lorem.Paragraph();
+
+            
+            _ouput.WriteLine($"Doube: {faker.Random.Double(1,100)}");
+            _ouput.WriteLine($"Company: {faker.Company.CompanyName()}");
+            _ouput.WriteLine($"PersonEmail: {faker.Person.Email}");
+            _ouput.WriteLine($"PersonEmail: {faker.Lorem.Paragraph()}");
 
         }
 
@@ -111,6 +119,8 @@ namespace CursoOnline.DominioTest.Cursos
                 .ComMensagem("Valor do curso menor que 1!");
 
         }        
+
+
     }
     
 }

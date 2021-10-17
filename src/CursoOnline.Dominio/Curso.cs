@@ -13,7 +13,7 @@ namespace CursoOnline.Dominio.Cursos
         public double CargaHoraria { get; private set; }
         public PublicoAlvo PublicoAlvo { get; private set; }
         public double ValorCurso { get; private set; }
-        public string Descricao { get; set; }
+        public string Descricao { get; private set; }
 
         //public Curso() { }
 

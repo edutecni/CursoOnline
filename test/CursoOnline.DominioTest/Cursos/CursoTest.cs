@@ -45,7 +45,7 @@ namespace CursoOnline.DominioTest.Cursos
             _ouput.WriteLine($"Doube: {faker.Random.Double(1,100)}");
             _ouput.WriteLine($"Company: {faker.Company.CompanyName()}");
             _ouput.WriteLine($"PersonEmail: {faker.Person.Email}");
-            _ouput.WriteLine($"PersonEmail: {faker.Lorem.Paragraph()}");
+            _ouput.WriteLine($"Descricao: {faker.Lorem.Paragraph()}");
 
         }
 

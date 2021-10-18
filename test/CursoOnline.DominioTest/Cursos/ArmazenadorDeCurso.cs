@@ -3,6 +3,8 @@ using System;
 
 namespace CursoOnline.DominioTest.Cursos
 {
+
+    // Essa é aclasse de serviço apresentação
     internal class ArmazenadorDeCurso
     {
         private ICursoRepository _cursoRepository;

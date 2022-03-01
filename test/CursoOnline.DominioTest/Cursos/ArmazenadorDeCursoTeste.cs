@@ -1,6 +1,8 @@
 ﻿using Bogus;
 using CursoOnline.Dominio.Cursos;
+using CursoOnline.DominioTest._Util;
 using Moq;
+using System;
 using Xunit;
 
 namespace CursoOnline.DominioTest.Cursos
@@ -20,7 +22,7 @@ namespace CursoOnline.DominioTest.Cursos
                 Nome = fake.Random.Words(),
                 Descricao = fake.Lorem.Paragraph(),
                 CargaHoraria = fake.Random.Double(50, 10000),
-                PublicoAlvoId = 1,
+                PublicoAlvo = "Estudante",
                 Valor = fake.Random.Double(1000, 2000)
             };
 
@@ -41,7 +43,15 @@ namespace CursoOnline.DominioTest.Cursos
                     )));
 
         }
-    }
+
+        [Fact]
+        public void NaoDeveAdicionarComPublicoAlvoInvalido()
+        {
+            _cursoDto.PublicoAlvo = "Médico";
+
+            Assert.Throws<ArgumentException>(() => _armazenadorDeCurso.Armazenar(_cursoDto)).ComMensagem("Publico Alvo inválido");
+        }
+    }    
 
     public interface ICursoRepository
     {
@@ -54,7 +64,7 @@ namespace CursoOnline.DominioTest.Cursos
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public double CargaHoraria { get; set; }
-        public int PublicoAlvoId { get; set; }
+        public string PublicoAlvo { get; set; }
         public double Valor { get; set; }
     }
 }

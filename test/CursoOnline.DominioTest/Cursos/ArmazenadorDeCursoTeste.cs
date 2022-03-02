@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using CursoOnline.Dominio.Cursos;
+using CursoOnline.DominioTest._Builders;
 using CursoOnline.DominioTest._Util;
 using Moq;
 using System;
@@ -36,6 +37,8 @@ namespace CursoOnline.DominioTest.Cursos
 
             _armazenadorDeCurso.Armazenar(_cursoDto);
 
+            // Mock é o objet que serve para verificar propriedades, estado e comportamentos
+            // Verifica algo dele mesmo
             _cursoRepositoryMock.Verify(r => r.Adicionar(
                 It.Is<Curso>(
                     c => c.Nome == _cursoDto.Nome &&
@@ -45,18 +48,31 @@ namespace CursoOnline.DominioTest.Cursos
         }
 
         [Fact]
+        public void NaoDeveAdicionarCursoComMesmoNomeDeoutroJaSalvo()
+        {
+            // Stub => é quando ele é setupeado  para simular algo externo a ele
+            // é utilizado para verificar algo externo ao objeto, por exemplo como se ele estivesse sido retornado de um banco de dados
+            // Nesse caso o objeto foi criado somente para simular um retorno de banco de dados
+            var cursoJaSalvo = CursoBuilder.Novo().ComNome(_cursoDto.Nome).Build();
+            _cursoRepositoryMock.Setup(r => r.ObterPeloNome(_cursoDto.Nome)).Returns(cursoJaSalvo);
+
+            Assert.Throws<ArgumentException>(() => _armazenadorDeCurso.Armazenar(_cursoDto)).ComMensagem("Nome do curso já consta no baanco de dados");
+        }
+
+        [Fact]
         public void NaoDeveAdicionarComPublicoAlvoInvalido()
         {
             _cursoDto.PublicoAlvo = "Médico";
 
             Assert.Throws<ArgumentException>(() => _armazenadorDeCurso.Armazenar(_cursoDto)).ComMensagem("Publico Alvo inválido");
-        }
+        }        
     }    
 
     public interface ICursoRepository
     {
         void Adicionar(Curso curso);
         void Atualizar(Curso curso);
+        Curso ObterPeloNome(string nome);
     }
 
     public class CursoDto
